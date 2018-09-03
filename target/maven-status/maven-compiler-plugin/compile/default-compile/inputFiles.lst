@@ -1,0 +1,10 @@
+/Volumes/SD/projects/cqrs/cqrs-core/src/main/java/com/veamospues/cqrs/exception/EventNotEmittedException.java
+/Volumes/SD/projects/cqrs/cqrs-core/src/main/java/com/veamospues/cqrs/command/CommandExecutor.java
+/Volumes/SD/projects/cqrs/cqrs-core/src/main/java/com/veamospues/cqrs/event/EventStore.java
+/Volumes/SD/projects/cqrs/cqrs-core/src/main/java/com/veamospues/cqrs/exception/AggregateCreationException.java
+/Volumes/SD/projects/cqrs/cqrs-core/src/main/java/com/veamospues/cqrs/aggregate/AggregateRepository.java
+/Volumes/SD/projects/cqrs/cqrs-core/src/main/java/com/veamospues/cqrs/event/Event.java
+/Volumes/SD/projects/cqrs/cqrs-core/src/main/java/com/veamospues/cqrs/aggregate/AggregateRoot.java
+/Volumes/SD/projects/cqrs/cqrs-core/src/main/java/com/veamospues/cqrs/event/EventBus.java
+/Volumes/SD/projects/cqrs/cqrs-core/src/main/java/com/veamospues/cqrs/exception/AggregatePreviuoslyModifiedException.java
+/Volumes/SD/projects/cqrs/cqrs-core/src/main/java/com/veamospues/cqrs/command/Command.java
