@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -64,7 +65,7 @@ public class EventBusTest {
     // ARRANGE
     List<Event> eventList = asList(event, anotherEvent);
     doNothing().when(eventBus).emit(event);
-    doThrow(new EventNotEmittedException(asList(anotherEvent))).when(eventBus).emit(anotherEvent);
+    doThrow(new EventNotEmittedException(singletonList(anotherEvent))).when(eventBus).emit(anotherEvent);
 
     // ACT
     thrown.expect(EventNotEmittedException.class);
@@ -78,7 +79,7 @@ public class EventBusTest {
   public void second_emit_is_called_when_first_fails() {
     // ARRANGE
     List<Event> eventList = asList(event, anotherEvent);
-    doThrow(new EventNotEmittedException(asList(event))).when(eventBus).emit(event);
+    doThrow(new EventNotEmittedException(singletonList(event))).when(eventBus).emit(event);
     doNothing().when(eventBus).emit(anotherEvent);
 
     // ACT

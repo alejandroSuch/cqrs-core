@@ -5,10 +5,10 @@ import com.veamospues.cqrs.aggregate.exception.AggregatePreviuoslyModifiedExcept
 import com.veamospues.cqrs.event.Event;
 import com.veamospues.cqrs.event.EventBus;
 import com.veamospues.cqrs.event.EventStore;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.java.Log;
 
+import java.util.List;
 import java.util.UUID;
 
 import static java.lang.String.format;
@@ -16,12 +16,19 @@ import static java.util.Objects.requireNonNull;
 
 @Log
 @Getter
-@AllArgsConstructor
 public abstract class AggregateRepository<T extends AggregateRoot<E>, E extends Event> {
   private static final int SNAPSHOT_THRESHOLD = 10; // TODO: BY CONFIGURATION
 
   private EventStore<E> eventStore;
   private EventBus<E> eventBus;
+
+  public AggregateRepository(EventStore<E> eventStore, EventBus<E> eventBus) {
+    requireNonNull(eventStore);
+    requireNonNull(eventBus);
+
+    this.eventStore = eventStore;
+    this.eventBus = eventBus;
+  }
 
   public void save(T aggregate, Long expectedVersion) {
     if (!aggregate.hasUncommitedChanges()) {
@@ -32,6 +39,11 @@ public abstract class AggregateRepository<T extends AggregateRoot<E>, E extends 
     saveUncommitedChanges(aggregate);
     eventBus.emit(aggregate.getUncommitedChanges());
     aggregate.markChangesAsCommited();
+  }
+
+  public void save(T aggregate, Long expectedVersion, String user) {
+    aggregate.getUncommitedChanges().forEach(change -> change.setUser(user));
+    save(aggregate, expectedVersion);
   }
 
   private void assertThatVersionsMatch(T aggregate, UUID id, Long expectedVersion) {
@@ -47,7 +59,13 @@ public abstract class AggregateRepository<T extends AggregateRoot<E>, E extends 
     requireNonNull(id);
 
     final T item = newAggregateRoot(clazz);
-    item.loadFromHistory(eventStore.getEventsFor(id));
+    List<E> events = eventStore.getEventsFor(id);
+    /* TODO: Return null if no history?
+    if(events.size() == 0) {
+      return null;
+    } */
+
+    item.loadFromHistory(events);
     item.setId(id);
     return item;
   }

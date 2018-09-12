@@ -2,6 +2,7 @@ package com.veamospues.cqrs.event;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
@@ -10,7 +11,7 @@ import static java.util.UUID.randomUUID;
 import static org.joda.time.DateTime.now;
 
 @Data
-public abstract class Event {
+public abstract class Event implements Serializable {
   private UUID id;
   private UUID aggregateId;
   private Long version;

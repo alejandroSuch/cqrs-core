@@ -13,7 +13,7 @@ public class TestAggregateRoot extends AggregateRoot {
   }
 
   @Override
-  void handle(Event event) {
+  protected void handle(Event event) {
 
   }
 }

@@ -26,7 +26,7 @@ public abstract class AggregateRoot<E extends Event> {
     this.id = id;
   }
 
-  abstract void handle(E event);
+  protected abstract void handle(E event);
 
   public Iterable<E> getUncommitedChanges() {
     return changes;

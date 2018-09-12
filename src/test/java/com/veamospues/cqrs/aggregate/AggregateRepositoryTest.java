@@ -17,8 +17,8 @@ import org.mockito.verification.VerificationMode;
 import java.util.UUID;
 
 import static java.lang.Boolean.FALSE;
-import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 import static java.util.UUID.randomUUID;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -85,7 +85,7 @@ public class AggregateRepositoryTest {
     final UUID aggregateId = randomUUID();
 
     when(event.getVersion()).thenReturn(0L);
-    when(eventStore.getEventsFor(aggregateId)).thenReturn(asList(event));
+    when(eventStore.getEventsFor(aggregateId)).thenReturn(singletonList(event));
 
     // ACT
     AggregateRoot byId = aggregateRepository.getById(aggregate.getClass(), aggregateId);
@@ -141,7 +141,7 @@ public class AggregateRepositoryTest {
   public void get_by_id_returns_an_initialized_aggregate_when_store_returns_non_empty_list() {
     // ARRANGE
     final UUID id = randomUUID();
-    when(eventStore.getEventsFor(id)).thenReturn(asList(event));
+    when(eventStore.getEventsFor(id)).thenReturn(singletonList(event));
     when(event.getVersion()).thenReturn(1L);
 
     // ACT

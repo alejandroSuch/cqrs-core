@@ -13,7 +13,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.List;
 import java.util.UUID;
 
-import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 import static java.util.stream.StreamSupport.stream;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -88,7 +88,7 @@ public class AggregateRootTest {
   @Test
   public void when_loading_from_history_there_are_no_uncommited_changes_and_version_is_set() {
     // ARRANGE
-    final List<Event> history = asList(anEvent);
+    final List<Event> history = singletonList(anEvent);
 
     // ACT
     aggregateRoot.loadFromHistory(history);
@@ -138,7 +138,6 @@ public class AggregateRootTest {
   public void ok_when_setting_a_non_null_version() {
     // ARRANGE
     final Long version = 1L;
-    thrown.expect(NullPointerException.class);
 
     // ACT
     aggregateRoot.setVersion(version);
